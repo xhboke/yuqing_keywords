@@ -9,5 +9,7 @@
 * 澎湃新闻
 * 贴吧热议榜
 * 知乎热搜榜
+## 在线预览
+[https://api.xhboke.com/hotwords/](https://api.xhboke.com/hotwords/)
 ## 感谢
 [https://github.com/fukuball/jieba-php](https://github.com/fukuball/jieba-php)
