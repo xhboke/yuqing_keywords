@@ -52,9 +52,10 @@ foreach ($all_data as $from => $data) {
             if (in_array($seg_list[$j]['tag'], $shici)) {
                 // 已存在则加权重，不存在则赋予权重
                 if (array_key_exists($seg_list[$j]['word'], $return['data'])) {
-                    $return['data'][$seg_list[$j]['word']] = $return['data'][$seg_list[$j]['word']] + $seg_weight;
+                    $return['data'][$seg_list[$j]['word']] = $return['data'][$seg_list[$j]['word']] + mb_strlen($seg_list[$j]['word']) * $seg_weight;
+                    
                 } else {
-                    $return['data'][$seg_list[$j]['word']] = $seg_weight;
+                    $return['data'][$seg_list[$j]['word']] = mb_strlen($seg_list[$j]['word']) * $seg_weight;
                 }
             }
         }
