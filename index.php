@@ -2,7 +2,7 @@
 /*
  * @Author: xhboke
  * @Date: 2021-05-22 19:50:22
- * @LastEditTime: 2021-05-28 13:52:11
+ * @LastEditTime: 2021-06-20 15:20:11
  * @Description: 分析舆情关键词
  * @FilePath: index.php
  */
@@ -20,6 +20,8 @@ Jieba::init();
 Finalseg::init();
 Posseg::init();
 
+// 获取停用词
+$stopwords = file("cn_stopwords.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 // 实词标签
 $shici = array(
@@ -50,12 +52,14 @@ foreach ($all_data as $from => $data) {
         for ($j = 0; $j < $seg_count; $j++) {
             // 只统计实词
             if (in_array($seg_list[$j]['tag'], $shici)) {
-                // 已存在则加权重，不存在则赋予权重
-                if (array_key_exists($seg_list[$j]['word'], $return['data'])) {
-                    $return['data'][$seg_list[$j]['word']] = $return['data'][$seg_list[$j]['word']] + mb_strlen($seg_list[$j]['word']) * $seg_weight;
-                    
-                } else {
-                    $return['data'][$seg_list[$j]['word']] = mb_strlen($seg_list[$j]['word']) * $seg_weight;
+                // 不要停用词
+                if (in_array($seg_list[$j]['word'], $stopwords) == false) {
+                    // 已存在则加权重，不存在则赋予权重
+                    if (array_key_exists($seg_list[$j]['word'], $return['data'])) {
+                        $return['data'][$seg_list[$j]['word']] = round($return['data'][$seg_list[$j]['word']] + mb_strlen($seg_list[$j]['word']) * $seg_weight, 3);
+                    } else {
+                        $return['data'][$seg_list[$j]['word']] = round(mb_strlen($seg_list[$j]['word']) * $seg_weight, 3);
+                    }
                 }
             }
         }
