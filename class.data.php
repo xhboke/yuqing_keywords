@@ -35,26 +35,27 @@ class Data
     public static function getBaidu()
     {
         // 数据地址
-        $url = 'http://top.baidu.com/buzz?b=1';
+        $url = 'https://top.baidu.com/board?tab=realtime';
         // 获取数据
         $data = file_get_contents($url);
         // 正则匹配
-        $reg = '/<a class="list-title" target="_blank" href="http:\/\/www.baidu.com\/baidu\?cl=3&tn=SE_baiduhomet8_jmjb7mjw&rsv_dl=fyb_top&fr=top1000&wd=(.*)<\/a>/';
+        $reg = '#"query":"([\s\S]*?)","show"#';
         preg_match_all($reg, $data, $matches);
         // 获取条数
         $len = count($matches['1']);
         // 输出结果
         for ($x = 0; $x < $len; $x++) {
-            $str = substr($matches['1'][$x], strrpos($matches['1'][$x], '>') + 1); //去除多余
+            // $str = substr($matches['1'][$x], strrpos($matches['1'][$x], '>') + 1); //去除多余
+            $str = $matches['1'][$x];
             // 赋予权重
             $arr[$x]['weight'] = ($len - $x + 1) / $len;
             // 目标
-            $arr[$x]['str'] = $str;
+            $arr[$x]['str'] = trim($str);
         }
         // 循环遍历返回
         $return = array();
         $return['count'] = $len;
-        $return['data'] = self::array_transcoding($arr);
+        $return['data'] = $arr;
         return $return;
     }
 
