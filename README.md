@@ -16,7 +16,7 @@
 
 [https://api.xhboke.com/hotwords/](https://api.xhboke.com/hotwords/)
 
-![ciyun](https://api.xhboke.com/hotwords/ciyun.png)
+![ciyun](https://api.xhboke.com/hotwords/.cache/ciyun.png)
 
 
 ## 感谢
